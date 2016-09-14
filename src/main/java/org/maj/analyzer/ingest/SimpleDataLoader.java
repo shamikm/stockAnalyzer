@@ -5,6 +5,7 @@ import org.maj.analyzer.Application;
 import org.maj.analyzer.model.SData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,10 +18,11 @@ import java.util.List;
 /**
  * @author shamik.majumdar
  */
+@Component
 public class SimpleDataLoader implements DataLoader {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
     private static final String G_ENDPOINT = "http://www.google.com/finance/historical?output=csv&q=%s";
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yy");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-MMM-yy");
     @Override
     public List<SData> loadData(String symbol) {
         List<SData> dataList = new ArrayList<>();
@@ -29,9 +31,14 @@ public class SimpleDataLoader implements DataLoader {
             try(BufferedReader in = new BufferedReader(new InputStreamReader(sUrl.openStream()))){
                 CSVReader reader = new CSVReader(in);
                 String[] tokens = null;
+                boolean first = true;
                 while ((tokens = reader.readNext()) != null) {
-                    LocalDate date = LocalDate.parse(tokens[0],formatter);
-                    dataList.add(new SData(symbol,date,Double.parseDouble(tokens[4])));
+                    if (first) {
+                        first = false;
+                    } else {
+                        LocalDate date = LocalDate.parse(tokens[0], formatter);
+                        dataList.add(new SData(symbol, date, Double.parseDouble(tokens[4])));
+                    }
                 }
             }
         } catch (Exception ex) {
