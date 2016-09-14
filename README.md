@@ -1,4 +1,4 @@
-## Overview
+## Overview [![Build Status](https://travis-ci.org/shamikm/stockAnalyzer.svg?branch=master)](https://travis-ci.org/shamikm/stockAnalyzer)
 This is a very simple implementation of stock analysis. It analyzes 2 years worth of daily data for a stock and predicts whether to BUY/HOLD/SELL.
 
 ## Details
