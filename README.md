@@ -3,6 +3,7 @@ This is a very simple implementation of stock analysis. It analyzes 2 years wort
 
 ## Details
 It is a spring boot based project. Build it using gradle and run like the following
+
  ./gradlew build & java -jar build/libs/s-analyzer-0.0.1.jar	
 
 This will by default run the app at the port 8080.
