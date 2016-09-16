@@ -4,7 +4,6 @@ import org.maj.analyzer.model.Symbol;
 import org.maj.analyzer.service.AnalyzeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 /**
  * @author shamik.majumdar
