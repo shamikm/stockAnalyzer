@@ -11,3 +11,6 @@ This will by default run the app at the port 8080.
 use curl to test it
 
    curl localhost:8080/AAPL
+
+## Demo Site
+  [demo site on heroku](http://shamik-stock-analyzer.herokuapp.com/AAPL)
