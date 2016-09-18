@@ -27,14 +27,8 @@ public class HelloTest {
     private MockMvc mvc;
 
     @Test
-    public void getHello() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("Hello World")));
-    }
-    @Test
     public void testBasicCall() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/AAPL").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/rest/symbol/AAPL").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("AAPL")));
     }
