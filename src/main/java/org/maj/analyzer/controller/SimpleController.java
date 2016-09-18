@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
  * @author shamik.majumdar
  */
 @RestController
+@RequestMapping("/rest")
 public class SimpleController {
     @Autowired
     private AnalyzeService analyzeService;
