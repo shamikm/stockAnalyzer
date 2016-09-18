@@ -7,7 +7,7 @@ public class StockDetails {
     private String source;
     private String user;
     private String message;
-    private Seniment seniment;
+    private Sentiment sentiment;
 
     public String getSource() {
         return source;
@@ -33,11 +33,11 @@ public class StockDetails {
         this.message = message;
     }
 
-    public Seniment getSeniment() {
-        return seniment;
+    public Sentiment getSentiment() {
+        return sentiment;
     }
 
-    public void setSeniment(Seniment seniment) {
-        this.seniment = seniment;
+    public void setSentiment(Sentiment sentiment) {
+        this.sentiment = sentiment;
     }
 }
