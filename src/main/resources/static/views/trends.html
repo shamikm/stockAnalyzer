@@ -1,5 +1,31 @@
-<div class="section">
+
+<div class="container">
+    <div class = "row" style="padding:100px;ß">
+        <form class="form-inline">
+            <div class="form-group">
+                <label for="stock-symbol">Symbol</label>
+                <input type="text" class="form-control" id="stock-symbol" placeholder="Enter Symbol" ng-model="config.symbol">
+            </div>
+            <button type="submit" class="btn btn-primary" ng-click="showDetails()">Show</button>
+        </form>
+    </div>
+
     <div class="row">
-        I DONT KNOW What I am doing
+        <table class = "table table-striped">
+            <thead>
+                <th>Symbol</th>
+                <th>Title</th>
+                <th>Decision</th>
+                <th>Bearish Sentiment</th>
+                <th>Bullish Sentiment</th>
+            </thead>
+            <tr ng-repeat="d in details">
+                <td>{{ d.symbol }}</td>
+                <td>{{ d.title }}</td>
+                <td>{{ d.decision}}</td>
+                <td>{{ d.bear * 100 | number : 0 }}%</td>
+                <td>{{ d.bull * 100 | number : 0 }}%</td>
+            </tr>
+        </table>
     </div>
 </div>
