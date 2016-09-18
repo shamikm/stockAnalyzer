@@ -48,20 +48,21 @@ public class Symbol {
         this.decision = decision;
     }
 
-    public double getBullishPercent(){
+    public String getBullishPercent(){
         if (stockDetailList.size() > 0) {
-            return (double)stockDetailList.stream().filter(s -> s.getSeniment() == Seniment.BULLISH).count()/stockDetailList.size();
-
+            long c = stockDetailList.stream().filter(s -> s.getSentiment() == Sentiment.BULLISH).count();
+            return String.format("%.2f%%", (double) c / stockDetailList.size() * 100);
         }else {
-            return 0D;
+            return "0%";
         }
     }
 
-    public double getBearishPercent(){
+    public String getBearishPercent(){
         if (stockDetailList.size() > 0) {
-            return(double)stockDetailList.stream().filter(s -> s.getSeniment() == Seniment.BEARISH).count()/stockDetailList.size();
+            long c = stockDetailList.stream().filter(s -> s.getSentiment() == Sentiment.BEARISH).count();
+            return String.format("%.2f%%", (double) c / stockDetailList.size() * 100);
         }else {
-            return 0D;
+            return "0%";
         }
     }
 

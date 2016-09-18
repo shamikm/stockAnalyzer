@@ -14,12 +14,7 @@ public class SimpleController {
     @Autowired
     private AnalyzeService analyzeService;
 
-    @RequestMapping("/")
-    public String hello(){
-        return "Hello World";
-    }
-
-    @RequestMapping(value = "/{symbol}", method = RequestMethod.GET)
+    @RequestMapping(value = "/symbol/{symbol}", method = RequestMethod.GET)
     @ResponseBody
     public Symbol decide(@PathVariable String symbol){
         return analyzeService.takeADecision(symbol);

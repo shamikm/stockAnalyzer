@@ -1,6 +1,6 @@
 package org.maj.analyzer.ingest;
 
-import org.maj.analyzer.model.Seniment;
+import org.maj.analyzer.model.Sentiment;
 import org.maj.analyzer.model.StockDetails;
 import org.maj.analyzer.model.Symbol;
 import org.springframework.core.ParameterizedTypeReference;
@@ -39,7 +39,7 @@ public class STbasedLoader implements StockDetailsLoader {
             Map<String,Object> sentimentMap = (Map<String,Object>)entities.get("sentiment");
             if (sentimentMap != null ) {
                 String sentiment = (String) sentimentMap.get("basic");
-                stockDetails.setSeniment(Seniment.valueOf(sentiment.toUpperCase()));
+                stockDetails.setSentiment(Sentiment.valueOf(sentiment.toUpperCase()));
             }
             s.addStockMessage(stockDetails);
         });

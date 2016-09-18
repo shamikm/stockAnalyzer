@@ -28,7 +28,7 @@ public class HelloTest {
 
     @Test
     public void testBasicCall() throws Exception {
-        mvc.perform(MockMvcRequestBuilders.get("/rest/AAPL").accept(MediaType.APPLICATION_JSON))
+        mvc.perform(MockMvcRequestBuilders.get("/rest/symbol/AAPL").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("AAPL")));
     }
