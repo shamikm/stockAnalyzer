@@ -1,10 +1,13 @@
 package org.maj.analyzer;
 
+import org.maj.analyzer.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -14,6 +17,8 @@ import java.util.Arrays;
  * @author shamik.majumdar
  */
 @SpringBootApplication
+@Import(AppConfig.class)
+
 public class Application extends WebMvcConfigurerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
