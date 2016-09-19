@@ -18,6 +18,7 @@ import java.util.Map;
  */
 @Component
 public class STbasedLoader implements StockDetailsLoader {
+    private static final String SOURCE = "StockTwits";
     private static final String URL_PATTERN = "https://api.stocktwits.com/api/2/streams/symbol/{symbol}.json";
     private final RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
     @Override
@@ -32,7 +33,7 @@ public class STbasedLoader implements StockDetailsLoader {
 
         messageList.forEach(entry -> {
             StockDetails stockDetails = new StockDetails();
-            stockDetails.setSource("StockTwits");
+            stockDetails.setSource(SOURCE);
             stockDetails.setUser(((Map<String,String>)entry.get("user")).get("username"));
             stockDetails.setMessage((String) entry.get("body"));
             Map<String,Object> entities = (Map<String,Object>)entry.get("entities");

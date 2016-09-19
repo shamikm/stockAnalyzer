@@ -40,4 +40,14 @@ public class StockDetails {
     public void setSentiment(Sentiment sentiment) {
         this.sentiment = sentiment;
     }
+
+    @Override
+    public String toString() {
+        return "StockDetails{" +
+                "source='" + source + '\'' +
+                ", user='" + user + '\'' +
+                ", message='" + message + '\'' +
+                ", sentiment=" + sentiment +
+                '}';
+    }
 }

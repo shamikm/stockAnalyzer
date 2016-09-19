@@ -23,15 +23,29 @@ public class AnalyzeService {
     private DeriveMetrics deriveMetrics;
     @Autowired
     private EvaluateStock evaluateStock;
-    @Autowired
-    private StockDetailsLoader detailsLoader;
+
+    private List<StockDetailsLoader> detailsLoader;
+
+    public void setDetailsLoader(List<StockDetailsLoader> detailsLoader) {
+        this.detailsLoader = detailsLoader;
+    }
 
     public Symbol takeADecision(String symbol){
         List<SData> dataList = dataLoader.loadData(symbol);
         dataList = deriveMetrics.transform(dataList);
         Decision decision = evaluateStock.evaluate(dataList);
-        Symbol stock = detailsLoader.loadStockDetails(symbol);
-        stock.setDecision(decision);
-        return stock;
+
+        Symbol stockSymbolData = new Symbol();
+        detailsLoader.forEach(loader -> {
+            Symbol s = loader.loadStockDetails(symbol);
+            if (stockSymbolData.getSymbol() == null) {
+                stockSymbolData.setSymbol(s.getSymbol());
+                stockSymbolData.setTitle(s.getTitle());
+            }
+            stockSymbolData.addStockMessages(s.getStockDetailList());
+        });
+
+        stockSymbolData.setDecision(decision);
+        return stockSymbolData;
     }
 }

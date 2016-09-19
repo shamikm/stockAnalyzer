@@ -66,4 +66,7 @@ public class Symbol {
         }
     }
 
+    public void addStockMessages(List<StockDetails> stockDetailList) {
+        this.stockDetailList.addAll(stockDetailList);
+    }
 }
