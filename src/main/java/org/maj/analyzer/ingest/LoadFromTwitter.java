@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter4j.*;
 
+import java.security.acl.LastOwnerException;
 import java.util.List;
 
 /**
@@ -25,13 +26,14 @@ public class LoadFromTwitter implements StockDetailsLoader{
         s.setSymbol(symbol);
         Twitter twitter = new TwitterFactory().getInstance();
         try {
-            Query query = new Query("#" + symbol + " -filter:retweets -filter:links -filter:replies -filter:images");
+            Query query = new Query("$" + symbol + " -filter:retweets -filter:links -filter:replies -filter:images");
             query.setLocale("en");
             query.setLang("en");
             QueryResult result;
             do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
+                LOGGER.info("received {} number of tweets",tweets.size());
                 for (Status tweet : tweets) {
                     String text = tweet.getText().toLowerCase();
                     if (text.contains("stock") || text.contains("share") || text.contains("market")) {
