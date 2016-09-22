@@ -29,14 +29,15 @@ public class LoadFromTwitter implements StockDetailsLoader{
             Query query = new Query("$" + symbol + " -filter:retweets -filter:links -filter:replies -filter:images");
             query.setLocale("en");
             query.setLang("en");
+            query.setCount(20);
             QueryResult result;
-            do {
+            //do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
                 LOGGER.info("received {} number of tweets",tweets.size());
                 for (Status tweet : tweets) {
                     String text = tweet.getText().toLowerCase();
-                    if (text.contains("stock") || text.contains("share") || text.contains("market")) {
+                    //if (text.contains("stock") || text.contains("share") || text.contains("market")) {
                         StockDetails stockDetails = new StockDetails();
                         stockDetails.setMessage(text);
                         stockDetails.setUser(tweet.getUser().getScreenName());
@@ -45,9 +46,9 @@ public class LoadFromTwitter implements StockDetailsLoader{
                         //stockDetails.setSentiment();
                         s.addStockMessage(stockDetails);
                         LOGGER.info(stockDetails.toString());
-                    }
+                    //}
                 }
-            } while ((query = result.nextQuery()) != null);
+            //} while ((query = result.nextQuery()) != null);
 
         } catch (TwitterException ex) {
             LOGGER.error(ex.getMessage(),ex);
