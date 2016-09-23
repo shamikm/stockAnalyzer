@@ -84,14 +84,18 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" data-bind="value: symbol" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button data-bind="click: updatePageData" class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
+
+                                <form data-bind="submit : updatePageData">
+                                    <div class="input-group custom-search-form">
+                                        <input type="text" data-bind="value: symbol" class="form-control" placeholder="Enter Symbol...">
+                                        <span class="input-group-btn">
+                                            <button data-bind="click: updatePageData" class="btn btn-default" type="button">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </form>
+
                             <!-- /input-group -->
                         </li>
                         <li>
@@ -187,7 +191,7 @@
                                     <i class="fa fa-newspaper-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">0</div>
+                                    <div class="huge" data-bind="text: totalRecos"></div>
                                     <div>News Analyzed</div>
                                 </div>
                             </div>
@@ -204,18 +208,61 @@
             </div>
             <!-- /.row -->
             <div class="row">
+
                 <div class="col-lg-6 col-md-6">
                     <!-- /.panel -->
-                    <div class="panel panel-default">
+                    <div class="chat-panel panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-pie-chart fa-fw"></i> Tweet Sentiment Distribution
+                            <i class="fa fa-hand-o-right fa-fw"></i> Market Recommendations
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-chevron-down"></i>
+                                </button>
+                                <ul class="dropdown-menu slidedown">
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-thumbs-up fa-fw"></i> Show Only Buy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-thumbs-down fa-fw"></i> Show Only Sell
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-question fa-fw"></i> Show Other
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="panel-body">
-                            <div id="morris-donut-chart"></div>
+
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                <tr><th>Sentiment</th></th><th>When</th><th>Who</th><th>What</th><th>Details</th></tr>
+                                </thead>
+                                <tbody data-bind="foreach: recos">
+                                <tr>
+                                    <td>
+                                        <span data-bind="css: { 'fa-thumbs-up': sentiment == 'BULLISH', 'fa-thumbs-down': sentiment == 'BEARISH', 'fa-question': sentiment == null }" class="sentimentIcon fa fa-2x pull-left"/>
+                                    </td>
+                                    <td data-bind="text: when"></td>
+                                    <td data-bind="text: who"></td>
+                                    <td data-bind="text: what"></td>
+                                    <td data-bind="text: details"></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+
+
                         </div>
-                        <!-- /.panel-body -->
-                    </div>				
-				</div>
+                        <div class="panel-footer"></div>
+                    </div>
+
+                </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -277,7 +324,18 @@
 				</div>				
 			</div>
 			<div class="row">
-				<div class="col-lg-12 col-md-24">
+                <div class="col-lg-6 col-md-6">
+                    <!-- /.panel -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-pie-chart fa-fw"></i> Tweet Sentiment Distribution
+                        </div>
+                        <div class="panel-body">
+                            <div id="morris-donut-chart"></div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-lg-6 col-md-6">
                     <!-- /.panel -->
                     <div class="chat-panel panel panel-default">
                         <div class="panel-heading">

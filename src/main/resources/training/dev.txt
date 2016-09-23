@@ -1,0 +1,2 @@
+(4 (4 (2 this) (2 stock)) (4 (2 could) (4 double)))
+(1 (1 not) (4 (2 looking) (4 good)))

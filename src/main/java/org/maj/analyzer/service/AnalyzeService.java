@@ -23,6 +23,8 @@ public class AnalyzeService {
     private DeriveMetrics deriveMetrics;
     @Autowired
     private EvaluateStock evaluateStock;
+    @Autowired
+    private FinancialSentimentService financialSentimentService;
 
     private List<StockDetailsLoader> detailsLoader;
 
@@ -46,6 +48,7 @@ public class AnalyzeService {
         });
 
         stockSymbolData.setDecision(decision);
+        stockSymbolData.setFinanceReco(financialSentimentService.loadFinaincialRecommendations(symbol));
         return stockSymbolData;
     }
 }
