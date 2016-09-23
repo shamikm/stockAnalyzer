@@ -15,6 +15,7 @@ public class Symbol {
     private String title;
     private Decision decision;
     List<StockDetails> stockDetailList = new ArrayList<>();
+    List<FxRecommendation> financeReco;
 
     public String getSymbol() {
         return symbol;
@@ -68,5 +69,17 @@ public class Symbol {
 
     public void addStockMessages(List<StockDetails> stockDetailList) {
         this.stockDetailList.addAll(stockDetailList);
+    }
+
+    public void setStockDetailList(List<StockDetails> stockDetailList) {
+        this.stockDetailList = stockDetailList;
+    }
+
+    public List<FxRecommendation> getFinanceReco() {
+        return financeReco;
+    }
+
+    public void setFinanceReco(List<FxRecommendation> financeReco) {
+        this.financeReco = financeReco;
     }
 }

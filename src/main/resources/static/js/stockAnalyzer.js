@@ -54,7 +54,9 @@ function AppViewModel(symbol) {
 	this.symbol = ko.observable(symbol);
     this.companyName = ko.observable();
     this.totalTweets = ko.observable();
+    this.totalRecos = ko.observable();
     this.tweets = ko.observableArray([]);
+    this.recos = ko.observableArray([]);
     
     this.currentPrice = ko.observable();
     this.openingPrice = ko.observable();
@@ -84,7 +86,8 @@ function AppViewModel(symbol) {
 	        self.companyName(allData.symbol + " - " + allData.title);
 	        self.totalTweets(allData.stockDetailList.length);
 	        self.tweets(allData.stockDetailList);
-	        
+	        self.recos(allData.financeReco);
+	        self.totalRecos(allData.financeReco.length);
 	        self.decision(allData.decision);
 	        
 	        var data = new Array();

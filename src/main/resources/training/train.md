@@ -5,3 +5,4 @@ java -cp "*" -mx8g edu.stanford.nlp.sentiment.BuildBinarizedDataset -input test.
 java -cp "*" -mx8g edu.stanford.nlp.sentiment.BuildBinarizedDataset -input test2.txt > dev.txt
 * Create the model
 java -cp "*" -mx8g edu.stanford.nlp.sentiment.SentimentTraining -numHid 25 -trainPath train.txt -devPath dev.txt -train -model model.ser.gz
+
