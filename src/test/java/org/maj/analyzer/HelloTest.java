@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class HelloTest {
     private MockMvc mvc;
 
     @Test
+    @Ignore
     public void testBasicCall() throws Exception {
         mvc.perform(MockMvcRequestBuilders.get("/rest/symbol/AAPL").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
