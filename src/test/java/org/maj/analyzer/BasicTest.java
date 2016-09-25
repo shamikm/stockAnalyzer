@@ -5,22 +5,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.maj.analyzer.ingest.SimpleDataLoader;
 import org.maj.analyzer.model.SData;
-import org.maj.analyzer.transformer.EMAtransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.List;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author shamik.majumdar
@@ -34,8 +27,7 @@ public class BasicTest {
     private MockMvc mvc;
     @Autowired
     private SimpleDataLoader dataLoader;
-    @Autowired
-    private EMAtransformer transformer;
+
 
     @Test
     public void loadData() throws Exception {
@@ -48,8 +40,6 @@ public class BasicTest {
         List<SData> list = dataLoader.loadData("AMZN");
         Assert.assertNotNull(list);
         Assert.assertTrue(list.size() > 0);
-        list = transformer.transform(list);
-        list.forEach(a -> LOGGER.info(a.toString()));
 
     }
 }

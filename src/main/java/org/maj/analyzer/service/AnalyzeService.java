@@ -4,13 +4,14 @@ import org.maj.analyzer.ingest.DataLoader;
 import org.maj.analyzer.ingest.StockDetailsLoader;
 import org.maj.analyzer.model.Decision;
 import org.maj.analyzer.model.SData;
+import org.maj.analyzer.model.Signal;
 import org.maj.analyzer.model.Symbol;
-import org.maj.analyzer.rule.EvaluateStock;
-import org.maj.analyzer.transformer.DeriveMetrics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by shamikm78 on 9/14/16.
@@ -19,23 +20,30 @@ import java.util.List;
 public class AnalyzeService {
     @Autowired
     private DataLoader dataLoader;
-    @Autowired
-    private DeriveMetrics deriveMetrics;
-    @Autowired
-    private EvaluateStock evaluateStock;
+
     @Autowired
     private FinancialSentimentService financialSentimentService;
 
     private List<StockDetailsLoader> detailsLoader;
+
+    private List<DecisionMaker> decisionMakers;
+
+    public void setDecisionMakers(List<DecisionMaker> decisionMakers) {
+        this.decisionMakers = decisionMakers;
+    }
 
     public void setDetailsLoader(List<StockDetailsLoader> detailsLoader) {
         this.detailsLoader = detailsLoader;
     }
 
     public Symbol takeADecision(String symbol){
-        List<SData> dataList = dataLoader.loadData(symbol);
-        dataList = deriveMetrics.transform(dataList);
-        Decision decision = evaluateStock.evaluate(dataList);
+        final List<SData> dataList = dataLoader.loadData(symbol);
+        List<Decision> decisions = new ArrayList<>();
+        decisionMakers.forEach(decisionMaker -> decisions.add(decisionMaker.takeDecision(dataList)));
+        List<Decision> sellSignals = decisions.stream().filter(d -> d.getSignal() == Signal.SELL).collect(Collectors.toList());
+        List<Decision> buySignals = decisions.stream().filter(d -> d.getSignal() == Signal.BUY).collect(Collectors.toList());
+
+
 
         Symbol stockSymbolData = new Symbol();
         detailsLoader.forEach(loader -> {
@@ -47,7 +55,7 @@ public class AnalyzeService {
             stockSymbolData.addStockMessages(s.getStockDetailList());
         });
 
-        stockSymbolData.setDecision(decision);
+        stockSymbolData.setSignal(sellSignals.size() > buySignals.size() ? Signal.SELL : Signal.BUY);
         stockSymbolData.setFinanceReco(financialSentimentService.loadFinaincialRecommendations(symbol));
         return stockSymbolData;
     }
