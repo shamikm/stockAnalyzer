@@ -73,12 +73,12 @@ function AppViewModel(symbol) {
         return this.priceChange() + " ("+this.percentChange() + ")";    
     }, this);    
     
-    this.decision = ko.observable();
+    this.signal = ko.observable();
     this.decisionClass = ko.computed(function() {
-        return this.decision() == "SELL"?"fa-thumbs-down":"fa-thumbs-up";    
+        return this.signal() == "SELL"?"fa-thumbs-down":"fa-thumbs-up";
     }, this);
     this.decisionColor = ko.computed(function() {
-        return this.decision() == "SELL"?"panel-red":"panel-green";    
+        return this.signal() == "SELL"?"panel-red":"panel-green";
     }, this);
     
     self.updatePageData = function() {
@@ -88,7 +88,7 @@ function AppViewModel(symbol) {
 	        self.tweets(allData.stockDetailList);
 	        self.recos(allData.financeReco);
 	        self.totalRecos(allData.financeReco.length);
-	        self.decision(allData.decision);
+	        self.signal(allData.signal);
 	        
 	        var data = new Array();
 	        var bullishPercent = new Object();

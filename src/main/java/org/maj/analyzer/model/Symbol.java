@@ -1,7 +1,6 @@
 package org.maj.analyzer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 public class Symbol {
     private String symbol;
     private String title;
-    private Decision decision;
+    private Signal signal;
     List<StockDetails> stockDetailList = new ArrayList<>();
     List<FxRecommendation> financeReco;
 
@@ -41,12 +40,12 @@ public class Symbol {
         return stockDetailList;
     }
 
-    public Decision getDecision() {
-        return decision;
+    public Signal getSignal() {
+        return signal;
     }
 
-    public void setDecision(Decision decision) {
-        this.decision = decision;
+    public void setSignal(Signal signal) {
+        this.signal = signal;
     }
 
     public String getBullishPercent(){
