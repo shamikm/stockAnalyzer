@@ -1,5 +1,9 @@
 package org.maj.analyzer.service;
 
+import au.com.bytecode.opencsv.CSVWriter;
+import ch.qos.logback.core.util.FileUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.maj.analyzer.ingest.DataLoader;
 import org.maj.analyzer.ingest.StockDetailsLoader;
 import org.maj.analyzer.model.Decision;
@@ -8,7 +12,14 @@ import org.maj.analyzer.model.Signal;
 import org.maj.analyzer.model.Symbol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileSystemUtils;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +49,20 @@ public class AnalyzeService {
 
     public Symbol takeADecision(String symbol){
         final List<SData> dataList = dataLoader.loadData(symbol);
+
+/*        try {
+            CSVWriter csvWriter = new CSVWriter(new FileWriter("/tmp/test.csv"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            dataList.forEach(d -> {
+                csvWriter.writeNext(new String[]{d.getSymbol(),d.getDate().format(formatter),String.format("%.2f",d.getPrice())});
+
+            });
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
         List<Decision> decisions = new ArrayList<>();
         decisionMakers.forEach(decisionMaker -> decisions.add(decisionMaker.takeDecision(dataList)));
         List<Decision> sellSignals = decisions.stream().filter(d -> d.getSignal() == Signal.SELL).collect(Collectors.toList());

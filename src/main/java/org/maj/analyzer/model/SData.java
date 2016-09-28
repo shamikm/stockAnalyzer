@@ -1,5 +1,7 @@
 package org.maj.analyzer.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 /**
