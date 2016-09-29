@@ -11,11 +11,23 @@ public class SData {
     private final String symbol;
     private final LocalDate date;
     private final double price;
+    private final double high;
+    private final double low;
 
     public SData(String symbol, LocalDate date, double price) {
         this.symbol = symbol;
         this.date = date;
         this.price = price;
+        this.high = this.price;
+        this.low = this.price;
+    }
+
+    public SData(String symbol, LocalDate date, double price, double high, double low) {
+        this.symbol = symbol;
+        this.date = date;
+        this.price = price;
+        this.high = high;
+        this.low = low;
     }
 
     public String getSymbol() {
@@ -28,6 +40,14 @@ public class SData {
 
     public double getPrice() {
         return price;
+    }
+
+    public double getHigh() {
+        return high;
+    }
+
+    public double getLow() {
+        return low;
     }
 
     @Override

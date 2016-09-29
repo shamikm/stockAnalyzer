@@ -30,12 +30,11 @@ public class StochasticOsc implements DecisionMaker {
             double high = Double.NEGATIVE_INFINITY;
             double low = Double.POSITIVE_INFINITY;
             for (int j=i+1; j < i+1+LOOK_BACK_WINDOW; j++) {
-                double c = data.get(j).getPrice();
-                if (c < low) {
-                    low = c;
+                if (data.get(j).getHigh() > high) {
+                    high = data.get(j).getHigh();
                 }
-                if (c>high) {
-                    high = c;
+                if (data.get(j).getLow() < low){
+                    low = data.get(j).getLow();
                 }
             }
 
@@ -52,9 +51,9 @@ public class StochasticOsc implements DecisionMaker {
         }
         double recentK = percentK.get(0);
         double recentD = percentD.get(0);
-        if (recentK <= MIN_THRESHOLD && recentK > recentD) {
-            signal = Signal.BUY;
-        }else if (recentK >=MAX_THRESHOLD && recentK < recentD) {
+        if (recentK < MAX_THRESHOLD) {
+            signal = recentK > recentD ? Signal.BUY : Signal.SELL;
+        } else if (recentK >=MAX_THRESHOLD && recentK < recentD) {
             signal = Signal.SELL;
         }
         LOGGER.info("{} decided to {}", NAME, signal);

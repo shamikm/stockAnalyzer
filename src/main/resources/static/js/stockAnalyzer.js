@@ -44,7 +44,7 @@ $(function() {
             break;
         }
     }
-    ko.applyBindings(new AppViewModel("AAPL"));
+    ko.applyBindings(new AppViewModel(""));
 });
 
 var donut;
@@ -68,6 +68,13 @@ function AppViewModel(symbol) {
     this.ebitda = ko.observable();
     this.volume = ko.observable();
     this.marketCap = ko.observable();
+
+    if ("" === symbol) {
+        this.displayDetails = ko.observable(false);
+    }else {
+        this.displayDetails = ko.observable(true);
+    }
+
     
     this.daysChange = ko.computed(function() {
         return this.priceChange() + " ("+this.percentChange() + ")";    
@@ -125,6 +132,8 @@ function AppViewModel(symbol) {
 	    	self.volume(allData.query.results.quote.Volume);
 	    });
 	    
+    };
+    if ("" !== symbol) {
+        self.updatePageData();
     }
-    self.updatePageData();
 };

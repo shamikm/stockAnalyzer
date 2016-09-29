@@ -108,7 +108,7 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" data-bind="if: displayDetails">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header" data-bind="text: companyName"></h1>
@@ -397,6 +397,9 @@
                     <!-- /.panel .chat-panel -->				
 				</div>
 			</div>
+        </div>
+        <div id="page-wrapper" data-bind="if: displayDetails">
+
         </div>
         <!-- /#page-wrapper -->
 
