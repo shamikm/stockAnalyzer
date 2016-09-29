@@ -108,7 +108,8 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper" data-bind="if: displayDetails">
+        <div data-bind="visible: displayDetails">
+             <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header" data-bind="text: companyName"></h1>
@@ -398,8 +399,16 @@
 				</div>
 			</div>
         </div>
-        <div id="page-wrapper" data-bind="if: displayDetails">
-
+        </div>
+        <div data-bind="visible: displayHome">
+            <div id="page-wrapper">
+                THIS IS THE HOME PAGE
+            </div>
+        </div>
+        <div data-bind="visible: isLoading">
+            <div id="page-wrapper">
+                LOADING
+            </div>
         </div>
         <!-- /#page-wrapper -->
 

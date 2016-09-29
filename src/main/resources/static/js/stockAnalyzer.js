@@ -44,12 +44,14 @@ $(function() {
             break;
         }
     }
+
+
     ko.applyBindings(new AppViewModel(""));
 });
 
 var donut;
 
-function AppViewModel(symbol) {	
+function AppViewModel(symbol) {
 	var self = this;
 	this.symbol = ko.observable(symbol);
     this.companyName = ko.observable();
@@ -68,12 +70,9 @@ function AppViewModel(symbol) {
     this.ebitda = ko.observable();
     this.volume = ko.observable();
     this.marketCap = ko.observable();
-
-    if ("" === symbol) {
-        this.displayDetails = ko.observable(false);
-    }else {
-        this.displayDetails = ko.observable(true);
-    }
+    this.displayDetails = ko.observable(false);
+    this.displayHome = ko.observable(true);
+    this.isLoading = ko.observable(false);
 
     
     this.daysChange = ko.computed(function() {
@@ -89,7 +88,14 @@ function AppViewModel(symbol) {
     }, this);
     
     self.updatePageData = function() {
+        self.isLoading(true);
+	    self.displayDetails(false);
+        self.displayHome(false);
 	    $.getJSON("/rest/symbol/"+self.symbol(), function(allData) {
+
+	        self.isLoading(false);
+	        self.displayDetails(true);
+            self.displayHome(false);
 	        self.companyName(allData.symbol + " - " + allData.title);
 	        self.totalTweets(allData.stockDetailList.length);
 	        self.tweets(allData.stockDetailList);
