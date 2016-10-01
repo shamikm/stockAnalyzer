@@ -1,5 +1,8 @@
 package org.maj.analyzer.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by shamikm78 on 9/24/16.
  */
@@ -8,6 +11,7 @@ public class Decision {
     private final String symbol;
     private final String algoName;
     private String details;
+    private List<Double> statistics = new ArrayList<>();
 
     public Decision(Signal signal, String symbol, String algoName) {
         this.signal = signal;
@@ -33,5 +37,13 @@ public class Decision {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public List<Double> getStatistics() {
+        return statistics;
+    }
+
+    public void addStatistics(double d) {
+        statistics.add(d);
     }
 }

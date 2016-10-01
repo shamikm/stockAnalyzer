@@ -44,12 +44,14 @@ $(function() {
             break;
         }
     }
-    ko.applyBindings(new AppViewModel("AAPL"));
+
+
+    ko.applyBindings(new AppViewModel(""));
 });
 
 var donut;
 
-function AppViewModel(symbol) {	
+function AppViewModel(symbol) {
 	var self = this;
 	this.symbol = ko.observable(symbol);
     this.companyName = ko.observable();
@@ -68,6 +70,11 @@ function AppViewModel(symbol) {
     this.ebitda = ko.observable();
     this.volume = ko.observable();
     this.marketCap = ko.observable();
+    this.displayDetails = ko.observable(false);
+    this.displayHome = ko.observable(true);
+    this.isLoading = ko.observable(false);
+    this.trends = ko.observableArray([]);
+
     
     this.daysChange = ko.computed(function() {
         return this.priceChange() + " ("+this.percentChange() + ")";    
@@ -80,9 +87,36 @@ function AppViewModel(symbol) {
     this.decisionColor = ko.computed(function() {
         return this.signal() == "SELL"?"panel-red":"panel-green";
     }, this);
+
+    self.loadTrends = function() {
+        self.isLoading(true);
+        self.displayDetails(false);
+        self.displayHome(true);
+        $.getJSON("/rest/trend",function(data){
+            self.isLoading(false);
+            self.trends(data);
+        });
+    };
+
+    self.updatePageData2 = function(v){
+        console.log(v);
+        self.symbol(v);
+        self.updatePageData();
+    };
+
+    self.formatCurrency = function(value){
+        return "$"+value;
+    };
     
     self.updatePageData = function() {
+        self.isLoading(true);
+	    self.displayDetails(false);
+        self.displayHome(false);
 	    $.getJSON("/rest/symbol/"+self.symbol(), function(allData) {
+
+	        self.isLoading(false);
+	        self.displayDetails(true);
+            self.displayHome(false);
 	        self.companyName(allData.symbol + " - " + allData.title);
 	        self.totalTweets(allData.stockDetailList.length);
 	        self.tweets(allData.stockDetailList);
@@ -125,6 +159,10 @@ function AppViewModel(symbol) {
 	    	self.volume(allData.query.results.quote.Volume);
 	    });
 	    
+    };
+    if ("" !== self.symbol()) {
+        self.updatePageData();
+    }else {
+        self.loadTrends();
     }
-    self.updatePageData();
 };

@@ -18,7 +18,7 @@
     <link href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.5.2/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../css/stockAnalyzer.min.css" rel="stylesheet">
+    <link href="../css/stockAnalyzer.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css" rel="stylesheet">
@@ -99,7 +99,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
                     </ul>
                 </div>
@@ -108,7 +108,8 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div data-bind="visible: displayDetails">
+             <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header" data-bind="text: companyName"></h1>
@@ -397,6 +398,44 @@
                     <!-- /.panel .chat-panel -->				
 				</div>
 			</div>
+        </div>
+        </div>
+        <div data-bind="visible: displayHome">
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="page-header text-center">Top Performers</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Name</th>
+                                    <th>Market Cap.</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: trends">
+                            <tr>
+                                <td><a href="#" data-bind="click: function(data,event) {$root.updatePageData2($data.symbol)}"><span data-bind="text: symbol"></span> </a> </td>
+                                <td data-bind="text: name"></td>
+                                <td data-bind="text: marketCap"></td>
+                                <td data-bind="text: $root.formatCurrency(price)"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible: isLoading">
+            <div id="page-wrapper">
+                <div class="loading-indicator"></div>
+            </div>
         </div>
         <!-- /#page-wrapper -->
 
