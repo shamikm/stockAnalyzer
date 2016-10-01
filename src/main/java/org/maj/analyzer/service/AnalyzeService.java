@@ -1,25 +1,16 @@
 package org.maj.analyzer.service;
 
-import au.com.bytecode.opencsv.CSVWriter;
-import ch.qos.logback.core.util.FileUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.maj.analyzer.ingest.DataLoader;
 import org.maj.analyzer.ingest.StockDetailsLoader;
+import org.maj.analyzer.ingest.TrendLoader;
 import org.maj.analyzer.model.Decision;
 import org.maj.analyzer.model.SData;
 import org.maj.analyzer.model.Signal;
 import org.maj.analyzer.model.Symbol;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.util.FileSystemUtils;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +21,15 @@ import java.util.stream.Collectors;
 @Component
 public class AnalyzeService {
     @Autowired
+    @Qualifier("simpleloader")
     private DataLoader dataLoader;
 
     @Autowired
     private FinancialSentimentService financialSentimentService;
+
+    @Autowired
+    @Qualifier("trendloader")
+    private TrendLoader trendLoader;
 
     private List<StockDetailsLoader> detailsLoader;
 
@@ -83,5 +79,9 @@ public class AnalyzeService {
         stockSymbolData.setSignal(sellSignals.size() > buySignals.size() ? Signal.SELL : Signal.BUY);
         stockSymbolData.setFinanceReco(financialSentimentService.loadFinaincialRecommendations(symbol));
         return stockSymbolData;
+    }
+
+    public List<SData> getTrends(){
+        return trendLoader.loadData("");
     }
 }

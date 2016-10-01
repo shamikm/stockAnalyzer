@@ -402,6 +402,16 @@ table.dataTable thead .sorting:after {
 .timeline-body > p + p {
   margin-top: 5px;
 }
+
+.loading-indicator {
+    background: url("../images/ajax-loader.gif") no-repeat center;
+    position: fixed;
+    left: 0;
+    top: 0 ;
+    width: 100vw;
+    height: 100vh;
+}
+
 @media (max-width: 767px) {
   ul.timeline:before {
     left: 40px;
@@ -435,4 +445,5 @@ table.dataTable thead .sorting:after {
 .sentimentIcon {
 	line-height: inherit!important;
 }
+
 }

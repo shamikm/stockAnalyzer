@@ -3,6 +3,7 @@ package org.maj.analyzer.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author shamik.majumdar
@@ -13,6 +14,8 @@ public class SData {
     private final double price;
     private final double high;
     private final double low;
+    private String name;
+    private String marketCap;
 
     public SData(String symbol, LocalDate date, double price) {
         this.symbol = symbol;
@@ -34,9 +37,15 @@ public class SData {
         return symbol;
     }
 
+    @JsonIgnore
     public LocalDate getDate() {
         return date;
     }
+
+    public String getDateISO() {
+        return date.toString();
+    }
+
 
     public double getPrice() {
         return price;
@@ -48,6 +57,22 @@ public class SData {
 
     public double getLow() {
         return low;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getMarketCap() {
+        return marketCap;
+    }
+
+    public void setMarketCap(String marketCap) {
+        this.marketCap = marketCap;
     }
 
     @Override

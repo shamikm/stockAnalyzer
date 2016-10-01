@@ -73,6 +73,7 @@ function AppViewModel(symbol) {
     this.displayDetails = ko.observable(false);
     this.displayHome = ko.observable(true);
     this.isLoading = ko.observable(false);
+    this.trends = ko.observableArray([]);
 
     
     this.daysChange = ko.computed(function() {
@@ -86,6 +87,26 @@ function AppViewModel(symbol) {
     this.decisionColor = ko.computed(function() {
         return this.signal() == "SELL"?"panel-red":"panel-green";
     }, this);
+
+    self.loadTrends = function() {
+        self.isLoading(true);
+        self.displayDetails(false);
+        self.displayHome(true);
+        $.getJSON("/rest/trend",function(data){
+            self.isLoading(false);
+            self.trends(data);
+        });
+    };
+
+    self.updatePageData2 = function(v){
+        console.log(v);
+        self.symbol(v);
+        self.updatePageData();
+    };
+
+    self.formatCurrency = function(value){
+        return "$"+value;
+    };
     
     self.updatePageData = function() {
         self.isLoading(true);
@@ -139,7 +160,9 @@ function AppViewModel(symbol) {
 	    });
 	    
     };
-    if ("" !== symbol) {
+    if ("" !== self.symbol()) {
         self.updatePageData();
+    }else {
+        self.loadTrends();
     }
 };
