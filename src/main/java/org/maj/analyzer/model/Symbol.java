@@ -13,8 +13,10 @@ public class Symbol {
     private String symbol;
     private String title;
     private Signal signal;
-    List<StockDetails> stockDetailList = new ArrayList<>();
-    List<FxRecommendation> financeReco;
+    private List<StockDetails> stockDetailList = new ArrayList<>();
+    private List<FxRecommendation> financeReco;
+    private List<SData> rawData;
+
 
     public String getSymbol() {
         return symbol;
@@ -46,6 +48,14 @@ public class Symbol {
 
     public void setSignal(Signal signal) {
         this.signal = signal;
+    }
+
+    public List<SData> getRawData() {
+        return rawData;
+    }
+
+    public void setRawData(List<SData> rawData) {
+        this.rawData = rawData;
     }
 
     public String getBullishPercent(){
