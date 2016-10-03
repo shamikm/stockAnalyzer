@@ -107,12 +107,68 @@ function AppViewModel(symbol) {
     self.formatCurrency = function(value){
         return "$"+value;
     };
+
+    self.parseDate = function(s) {
+      var months = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,
+                    jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      var p = s.split('-');
+      return new Date(2000 + parseInt(p[2]), months[p[0].toLowerCase()], p[1]);
+    }
     
     self.updatePageData = function() {
         self.isLoading(true);
 	    self.displayDetails(false);
         self.displayHome(false);
 	    $.getJSON("/rest/symbol/"+self.symbol(), function(allData) {
+	        var symbolData = _.map(allData.rawData, function(item){
+	            var arr = [];
+	            var x = new Date(item.dateISO);
+	            arr.push(x.getTime() + x.getTimezoneOffset()*60*1000);
+	            arr.push(item.price);
+	            return arr;
+	        });
+	        var flags = _.map(allData.financeReco,function(item){
+	            var x = self.parseDate(item.when);
+	            return {
+	                x : x.getTime() + x.getTimezoneOffset()*60*1000,
+	                title : 'R',
+	                text : item.who + ":" + item.what + " " + item.details
+	            }
+
+	        });
+	        symbolData = _.sortBy(symbolData,[function(item){
+	            return item[0];
+	        }]);
+	        flags = _.sortBy(flags,[function(item){
+	            return item.x;
+	        }]);
+
+	        $('#container').highcharts('StockChart', {
+	            rangeSelector: {
+                    selected: 1
+                },
+
+                title: {
+                    text: self.symbol()
+                },
+
+                series: [{
+                    name: self.symbol(),
+                    data: symbolData,
+                    tooltip: {
+                        valueDecimals: 2
+                    },
+                    id: 'dataseries'
+                },
+                {
+                    type: 'flags',
+                    data: flags,
+                    onSeries: 'dataseries',
+                    shape: 'circlepin',
+                    width: 16
+                }]
+
+            });
 
 	        self.isLoading(false);
 	        self.displayDetails(true);
