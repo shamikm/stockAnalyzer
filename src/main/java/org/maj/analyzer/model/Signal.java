@@ -6,5 +6,7 @@ package org.maj.analyzer.model;
 public enum Signal {
     HOLD,
     BUY,
+    OVERSOLD,
+    OVERBOUGHT,
     SELL;
 }

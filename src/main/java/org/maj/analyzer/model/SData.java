@@ -16,6 +16,7 @@ public class SData {
     private final double low;
     private String name;
     private String marketCap;
+    private double volume;
 
     public SData(String symbol, LocalDate date, double price) {
         this.symbol = symbol;
@@ -23,14 +24,16 @@ public class SData {
         this.price = price;
         this.high = this.price;
         this.low = this.price;
+        this.volume = 0;
     }
 
-    public SData(String symbol, LocalDate date, double price, double high, double low) {
+    public SData(String symbol, LocalDate date, double price, double high, double low,double vol) {
         this.symbol = symbol;
         this.date = date;
         this.price = price;
         this.high = high;
         this.low = low;
+        this.volume = vol;
     }
 
     public String getSymbol() {
@@ -73,6 +76,10 @@ public class SData {
 
     public void setMarketCap(String marketCap) {
         this.marketCap = marketCap;
+    }
+
+    public double getVolume() {
+        return volume;
     }
 
     @Override

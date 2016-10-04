@@ -16,6 +16,7 @@ public class Symbol {
     private List<StockDetails> stockDetailList = new ArrayList<>();
     private List<FxRecommendation> financeReco;
     private List<SData> rawData;
+    private List<Decision> decisions;
 
 
     public String getSymbol() {
@@ -90,5 +91,13 @@ public class Symbol {
 
     public void setFinanceReco(List<FxRecommendation> financeReco) {
         this.financeReco = financeReco;
+    }
+
+    public List<Decision> getDecisions() {
+        return decisions;
+    }
+
+    public void setDecisions(List<Decision> decisions) {
+        this.decisions = decisions;
     }
 }

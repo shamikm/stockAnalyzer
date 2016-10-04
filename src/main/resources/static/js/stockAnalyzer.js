@@ -74,6 +74,7 @@ function AppViewModel(symbol) {
     this.displayHome = ko.observable(true);
     this.isLoading = ko.observable(false);
     this.trends = ko.observableArray([]);
+    this.decisions = ko.observableArray([]);
 
     
     this.daysChange = ko.computed(function() {
@@ -179,6 +180,7 @@ function AppViewModel(symbol) {
 	        self.recos(allData.financeReco);
 	        self.totalRecos(allData.financeReco.length);
 	        self.signal(allData.signal);
+	        self.decisions(allData.decisions);
 	        
 	        var data = new Array();
 	        var bullishPercent = new Object();
