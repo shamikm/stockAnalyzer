@@ -8,5 +8,7 @@ public enum Signal {
     BUY,
     OVERSOLD,
     OVERBOUGHT,
+    BEARISH_DIVERGENCE,
+    BULLISH_DIVERGENCE,
     SELL;
 }
