@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 @Component(value = "rsi")
 public class RSIDecisionMaker implements DecisionMaker {
     private static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(RSIDecisionMaker.class);
-    private static final String NAME = "rsi";
+    private static final String NAME = "RSI";
     private static final int LOOKBACK_WINDOW = 14;
     /**
      * Steps to calculate :
@@ -50,18 +50,18 @@ public class RSIDecisionMaker implements DecisionMaker {
                     double avgGains = 0;
                     if (idx == LOOKBACK_WINDOW+1) {
                         double gains = change.stream().filter(a -> a > 0).mapToDouble(Double::doubleValue).sum();
-                        double losses = change.stream().filter(a -> a < 0).mapToDouble(Double::doubleValue).sum();
+                        double losses = change.stream().filter(a -> a < 0).map(a -> -a).mapToDouble(Double::doubleValue).sum();
                         avgGains = gains/LOOKBACK_WINDOW;
                         avgGainsList.add(avgGains);
                         avgLosses = losses/LOOKBACK_WINDOW;
                         avgLossesList.add(avgLosses);
                     }else {
                         double c = series.get(idx).getPrice() - series.get(idx-1).getPrice();
-                        avgGains = (avgGainsList.get(avgGainsList.size()-1) * (LOOKBACK_WINDOW -1) +
-                                c > 0 ? c : 0 ) / LOOKBACK_WINDOW;
+                        avgGains = ((avgGainsList.get(avgGainsList.size()-1) * (LOOKBACK_WINDOW -1)) +
+                                (c > 0 ? c : 0) ) / LOOKBACK_WINDOW;
                         avgGainsList.add(avgGains);
-                        avgLosses = (avgLossesList.get(avgLossesList.size()-1) * (LOOKBACK_WINDOW -1) +
-                                c < 0 ? c : 0 ) / LOOKBACK_WINDOW;
+                        avgLosses = ((avgLossesList.get(avgLossesList.size()-1) * (LOOKBACK_WINDOW -1)) +
+                                (c < 0 ? -c : 0) ) / LOOKBACK_WINDOW;
                         avgLossesList.add(avgLosses);
                     }
                     double rs = avgLosses == 0 ? 0 : avgGains/avgLosses;

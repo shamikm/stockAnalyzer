@@ -57,6 +57,8 @@ public class OBVDecisionMaker implements DecisionMaker {
 
         List<Double> recentPrices = series.stream().limit(7).map(SData::getPrice).collect(Collectors.toList());
         List<Double> recetOBVs = obvs.stream().limit(7).collect(Collectors.toList());
+        Collections.reverse(recentPrices);
+        Collections.reverse(recetOBVs);
 
         SimpleRegression obvReg = new SimpleRegression();
         SimpleRegression priceReg = new SimpleRegression();
