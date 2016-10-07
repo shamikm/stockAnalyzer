@@ -33,8 +33,8 @@ public class AppConfig {
     public AnalyzeService analyzeService(){
         AnalyzeService analyzeService = new AnalyzeService();
         List<StockDetailsLoader> stockDetailsLoaders = new ArrayList<>();
-        //stockDetailsLoaders.add(sTbasedLoader);
-        stockDetailsLoaders.add(loadFromTwitter);
+        stockDetailsLoaders.add(sTbasedLoader);
+       // stockDetailsLoaders.add(loadFromTwitter);
         analyzeService.setDetailsLoader(stockDetailsLoaders);
         List<DecisionMaker> decisionMakers = new ArrayList<>();
         Arrays.stream(analyzers.split(",")).forEach(a -> {
