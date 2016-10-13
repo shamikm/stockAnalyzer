@@ -79,6 +79,7 @@ public class AnalyzeService {
         stockSymbolData.setSignal(sellSignals.size() > buySignals.size() ? Signal.SELL : Signal.BUY);
         stockSymbolData.setFinanceReco(financialSentimentService.loadFinaincialRecommendations(symbol));
         stockSymbolData.setRawData(dataList);
+        stockSymbolData.setDecisions(decisions);
         return stockSymbolData;
     }
 

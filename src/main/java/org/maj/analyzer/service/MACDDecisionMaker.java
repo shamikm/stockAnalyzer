@@ -1,6 +1,5 @@
 package org.maj.analyzer.service;
 
-import org.maj.analyzer.ingest.LoadFromTwitter;
 import org.maj.analyzer.model.Decision;
 import org.maj.analyzer.model.SData;
 import org.maj.analyzer.model.Signal;

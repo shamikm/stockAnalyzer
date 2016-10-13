@@ -37,7 +37,7 @@ public class SimpleDataLoader implements DataLoader {
                         first = false;
                     } else {
                         LocalDate date = LocalDate.parse(tokens[0], formatter);
-                        dataList.add(new SData(symbol, date, Double.parseDouble(tokens[4]),Double.parseDouble(tokens[1]), Double.parseDouble(tokens[2])));
+                        dataList.add(new SData(symbol, date, Double.parseDouble(tokens[4]),Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),Double.parseDouble(tokens[5])));
                     }
                 }
             }
