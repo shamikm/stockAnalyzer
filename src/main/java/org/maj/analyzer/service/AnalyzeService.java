@@ -35,6 +35,9 @@ public class AnalyzeService {
 
     private List<DecisionMaker> decisionMakers;
 
+    @Autowired
+    private PricePredictor pricePredictor;
+
     public void setDecisionMakers(List<DecisionMaker> decisionMakers) {
         this.decisionMakers = decisionMakers;
     }
@@ -80,6 +83,8 @@ public class AnalyzeService {
         stockSymbolData.setFinanceReco(financialSentimentService.loadFinaincialRecommendations(symbol));
         stockSymbolData.setRawData(dataList);
         stockSymbolData.setDecisions(decisions);
+        stockSymbolData.setPredictedPrice(pricePredictor.predictPrice(dataList));
+
         return stockSymbolData;
     }
 

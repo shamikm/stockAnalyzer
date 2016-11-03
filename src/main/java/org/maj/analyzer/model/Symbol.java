@@ -17,6 +17,7 @@ public class Symbol {
     private List<FxRecommendation> financeReco;
     private List<SData> rawData;
     private List<Decision> decisions;
+    private double predictedPrice;
 
 
     public String getSymbol() {
@@ -99,5 +100,13 @@ public class Symbol {
 
     public void setDecisions(List<Decision> decisions) {
         this.decisions = decisions;
+    }
+
+    public double getPredictedPrice() {
+        return predictedPrice;
+    }
+
+    public void setPredictedPrice(double predictedPrice) {
+        this.predictedPrice = predictedPrice;
     }
 }

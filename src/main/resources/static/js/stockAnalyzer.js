@@ -57,6 +57,7 @@ function AppViewModel(symbol) {
     this.companyName = ko.observable();
     this.totalTweets = ko.observable();
     this.totalRecos = ko.observable();
+    this.predictedPrice = ko.observable();
     this.tweets = ko.observableArray([]);
     this.recos = ko.observableArray([]);
     
@@ -181,6 +182,7 @@ function AppViewModel(symbol) {
 	        self.totalRecos(allData.financeReco.length);
 	        self.signal(allData.signal);
 	        self.decisions(allData.decisions);
+	        self.predictedPrice(allData.predictedPrice);
 	        
 	        var data = new Array();
 	        var bullishPercent = new Object();

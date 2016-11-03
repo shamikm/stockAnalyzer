@@ -126,7 +126,7 @@ public class WekaTest {
     @Test
     public void testDataLoad() throws Exception {
         int lookback = 3;
-        List<SData> data = dataLoader.loadData("UA");
+        List<SData> data = dataLoader.loadData("ADHD");
         DataSortUtility dataSortUtility = new DataSortUtility(true);
         Collections.sort(data,dataSortUtility);
         List<Double> changes = new ArrayList<>();
@@ -178,7 +178,8 @@ public class WekaTest {
             System.out.println("data " + data.get(i).toString());
             System.out.println("change " + changes.get(i));
         }
-        System.out.println(v[0]);
+        System.out.println("Expected change " + v[0]);
+        System.out.println("Expected price " + (data.get(0).getPrice() + v[0]));
 
 
     }
